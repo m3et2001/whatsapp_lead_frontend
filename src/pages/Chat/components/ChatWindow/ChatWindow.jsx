@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { GetChatMessage } from "../../../../apiCall";
 import { useQuery } from "@tanstack/react-query";
 import defaultBg from "../../../../assets/images/default_chat_bg.png";
 import { formatDateTime } from "../../../../utils/FormateDate";
+import "./ChatWindow.scss";
 
 const ChatWindow = () => {
   const location = useLocation();
@@ -51,14 +52,14 @@ const ChatWindow = () => {
       {/* chat list */}
       {chatDetail?.name ? (
         <div
-          className="chat-body w-100  chat-body-visible"
-          style={{ height: "87vh" }}
+          className={`chat-body w-100  ${chatId?"chat-body-visible":"d-none"}`}
+          // style={{ height: "87vh" }}
         >
           <div className="card-header sticky-top h-100 p-0  ">
             <div className="d-flex justify-content-between align-items-center shadow bg-white rounded p-3">
               {/* media */}
               <div className="d-flex align-items-center" id="active-chat-user">
-                <a href="#!" className=" d-xl-none d-block" data-close="">
+                <Link to="/" className=" d-xl-none d-block" data-close="">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width={24}
@@ -74,7 +75,7 @@ const ChatWindow = () => {
                     <line x1={19} y1={12} x2={5} y2={12} />
                     <polyline points="12 19 5 12 12 5" />
                   </svg>
-                </a>
+                </Link>
                 <div className="avatar avatar-md avatar-indicators avatar-online">
                   <img
                     src="./assets/images/avatar/male.jpg"
@@ -116,11 +117,11 @@ const ChatWindow = () => {
                     >
                       <div
                         className="simplebar-content"
-                        style={{
-                          padding: 20,
-                          height: "76vh",
-                          overflowY: "scroll",
-                        }}
+                        // style={{
+                        //   padding: 20,
+                        //   height: "76vh",
+                        //   overflowY: "scroll",
+                        // }}
                       >
                         {chatDetail?.messages.map((message) =>
                           message["Message Type"] === "User Response" ? (
