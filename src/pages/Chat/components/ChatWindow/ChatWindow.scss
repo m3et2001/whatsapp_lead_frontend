@@ -10,7 +10,8 @@
     padding: 20px;
     overflow-y: scroll;
     @media (max-width:1199.98px) {
-        height: 87vh;
+        // height: 87vh;
+        height: calc(100vh - 69px);
        
     }
 }
