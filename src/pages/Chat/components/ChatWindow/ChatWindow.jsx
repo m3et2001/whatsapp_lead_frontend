@@ -7,7 +7,6 @@ import defaultBg from "../../../../assets/images/default_chat_bg.png";
 import { formatDateTime } from "../../../../utils/FormateDate";
 import "./ChatWindow.scss";
 import { useStateValue } from "../../../../StateProvider";
-import { types } from "util";
 
 const ChatWindow = () => {
   const [, dispatch] = useStateValue();
