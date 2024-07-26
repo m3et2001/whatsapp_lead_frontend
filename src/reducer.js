@@ -26,7 +26,7 @@ function reducer(state, action) {
       };
 
     case "SET_LOADING":
-      if (action.statu) {
+      if (action.status) {
         window.scrollTo(0, 0);
         document.body.style.overflow = "hidden";
       } else {

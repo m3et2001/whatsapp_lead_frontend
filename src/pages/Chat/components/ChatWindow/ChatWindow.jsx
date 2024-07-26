@@ -6,14 +6,18 @@ import { useQuery } from "@tanstack/react-query";
 import defaultBg from "../../../../assets/images/default_chat_bg.png";
 import { formatDateTime } from "../../../../utils/FormateDate";
 import "./ChatWindow.scss";
+import { useStateValue } from "../../../../StateProvider";
+import { types } from "util";
 
 const ChatWindow = () => {
+  const [, dispatch] = useStateValue();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
   const chatId = searchParams.get("chatId");
   const fetchChatList = async (chatId) => {
     // Perform the API call to fetch company info
+    dispatch({ type: "SET_LOADING", status: true });
     try {
       const response = await GetChatMessage(chatId);
       console.log(response.status);
@@ -27,6 +31,7 @@ const ChatWindow = () => {
       console.error("Error fetching data:", error); // Log any errors that occur
       throw error;
     }
+    dispatch({ type: "SET_LOADING", status: false });
   };
   const {
     isLoading,
@@ -52,7 +57,9 @@ const ChatWindow = () => {
       {/* chat list */}
       {chatDetail?.name ? (
         <div
-          className={`chat-body w-100  ${chatId?"chat-body-visible":"d-none"}`}
+          className={`chat-body w-100  ${
+            chatId ? "chat-body-visible" : "d-none"
+          }`}
           // style={{ height: "87vh" }}
         >
           <div className="card-header sticky-top h-100 p-0  ">
@@ -138,7 +145,10 @@ const ChatWindow = () => {
                                   </small>
                                   <div className="d-flex">
                                     {/* card */}
-                                    <div className="card mt-2 rounded-top-md-end-0  text-white " style={{background:"#624bff"}}>
+                                    <div
+                                      className="card mt-2 rounded-top-md-end-0  text-white "
+                                      style={{ background: "#624bff" }}
+                                    >
                                       {/* card body */}
                                       <div className="card-body text-start p-3">
                                         <p className="mb-0">
@@ -166,9 +176,8 @@ const ChatWindow = () => {
                               {/* media body */}
                               <div className=" ms-3">
                                 <small className="d-flex flex-column">
-                                  <span className="username">Chat Bot</span>    
+                                  <span className="username">Chat Bot</span>
                                   {formatDateTime(message.datetime)}
-
                                 </small>
                                 <div className="d-flex">
                                   <div className="card mt-2 rounded-top-md-left-0 border">
